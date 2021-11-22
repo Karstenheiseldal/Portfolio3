@@ -1,8 +1,4 @@
 package com.example.portfolio3;
-
-import com.example.portfolio3.StudentController;
-import com.example.portfolio3.StudentModel;
-import com.example.portfolio3.StudentViewer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -11,7 +7,8 @@ import java.sql.*;
 
 public class Main extends Application {
     public void start(Stage primaryStage)  {
-        String url="jdbc:sqlite:C:/Users/karst/Databases/StudentDB.db";
+
+        String url="jdbc:sqlite:C:/Users/karst/SoftwareDevelopment/SD/DB/StudentDB.db";
         StudentViewer view=new StudentViewer();
         StudentModel model=new StudentModel(url);
         StudentController control=null;
