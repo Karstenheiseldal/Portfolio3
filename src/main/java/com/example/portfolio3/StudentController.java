@@ -22,12 +22,13 @@ public class StudentController {
         this.model.QueryGetStudentsID();
         this.view.students = getStudents();
 
+        this.view.findClasses.setOnAction(e->HandlerPrintStudentClasses(view.studentComB.getValue(),1,view.result));
         view.configure();
     }
 
-    public ObservableList<String> getStudents() throws SQLException {
-        ArrayList<String> students = model.QueryGetStudentsID();
-        ObservableList<String> studentsNames= FXCollections.observableArrayList(students);
+    public ObservableList<Integer> getStudents() throws SQLException {
+        ArrayList<Integer> students = model.QueryGetStudentsID();
+        ObservableList<Integer> studentsNames= FXCollections.observableArrayList(students);
         return studentsNames;
     }
 
@@ -38,10 +39,12 @@ public class StudentController {
             ArrayList<StudentInfo> collectClass = model.QueryforStudents(StudentID, ClassID);
 
             for (int i = 0; i < collectClass.size(); i++) {
-                Integer classes = collectClass.get(i).className;
+                Integer classes = collectClass.get(i).classId;
                 Integer student = collectClass.get(i).StudentId;
+                Integer grade = collectClass.get(i).grades;
 
-                txtfield.appendText(i + ";" + collectClass.get(i).className + ": " + student);
+                txtfield.appendText("\n Student ID: " + student + " Attendended at class ID:" + classes);
+                txtfield.appendText(" \n Grade: " +grade);
             }
         }catch (SQLException e ){
             System.out.println(e.getMessage());

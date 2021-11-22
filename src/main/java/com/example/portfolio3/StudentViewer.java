@@ -7,15 +7,13 @@ import javafx.scene.layout.GridPane;
 
 public class StudentViewer {
         GridPane startview;
-
-
         Label studentLbl=new Label("Select student:");
 
         Button findClasses;
-        ComboBox<String> studentComB;
+        ComboBox<Integer> studentComB;
 
         TextArea result = new TextArea("Classes and Grades for");
-        public ObservableList<String> students;
+        public ObservableList<Integer> students;
 
         public StudentViewer(){
             startview=new GridPane();

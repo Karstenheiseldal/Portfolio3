@@ -29,14 +29,14 @@ public class StudentModel {
         this.stmt = conn.createStatement();
     }
 
-    public ArrayList<String> QueryGetStudentsID() throws SQLException {
-        ArrayList<String> students = new ArrayList<>();
+    public ArrayList<Integer> QueryGetStudentsID() throws SQLException {
+        ArrayList<Integer> students = new ArrayList<>();
         String sql = "SELECT * from Student;";
         rs = stmt.executeQuery(sql);
 
         while (rs != null && rs.next()) {
-            String Name = rs.getString(2) + " " + rs.getString(3);
-            students.add(Name);
+            Integer id = rs.getInt(1);
+            students.add(id);
         }
         return students;
     }
@@ -70,12 +70,12 @@ public class StudentModel {
 
 class StudentInfo{
     Integer StudentId=null;
-    Integer className=null;
+    Integer classId=null;
     Integer grades=null;
 
     StudentInfo(Integer StudentId,Integer classID, Integer grades){
         this.StudentId=StudentId;
-        this.className=classID;
+        this.classId=classID;
         this.grades=grades;
     }
 }
