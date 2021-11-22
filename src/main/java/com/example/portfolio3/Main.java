@@ -15,7 +15,7 @@ public class Main extends Application {
 
         try {
             control = new StudentController(view, model);
-            primaryStage.setTitle("Student finder");
+            primaryStage.setTitle("Student OS");
             primaryStage.setScene(new Scene(view.asParent(),600,475));
             primaryStage.show();
         }catch (SQLException e){
