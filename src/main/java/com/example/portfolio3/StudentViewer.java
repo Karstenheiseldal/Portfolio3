@@ -5,17 +5,22 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 
 public class StudentViewer {
         GridPane startview;
         Label studentLbl;
+        Button exitB;
+        TextArea clicked;
+
 
         ComboBox<String> studentComB;
         public ObservableList<String> students;
 
         ComboBox<String> classComB;
         public ObservableList<String> classes;
+
 
 
         public StudentViewer(){
@@ -33,14 +38,18 @@ public class StudentViewer {
             studentLbl=new Label("Select student:");
             startview.add(studentLbl,1,1);
 
-            Button ExitBtn=new Button("Exit");
-            startview.add(ExitBtn,4,5);
+            exitB=new Button("Exit");
+            startview.add(exitB,1,5);
 
             studentComB=new ComboBox<>();
             startview.add(studentComB,2,1);
 
             classComB = new ComboBox<>();
             startview.add(classComB,2,3);
+
+
+            clicked = new TextArea();
+            startview.add(clicked,1,7,15,10);
 
         }
 

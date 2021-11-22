@@ -11,7 +11,8 @@ import java.sql.*;
 
 public class Main extends Application {
     public void start(Stage primaryStage)  {
-        String url="jdbc:sqlite:C:/Users/karst/Databases/StudentDB.db";
+
+        String url="jdbc:sqlite:C:/Users/karst/SoftwareDevelopment/SD/DB/StudentDB.db";
         StudentViewer view=new StudentViewer();
         StudentModel model=new StudentModel(url);
         StudentController control=null;

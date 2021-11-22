@@ -6,6 +6,7 @@ import com.example.portfolio3.StudentViewer;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TextArea;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,16 +18,16 @@ public class StudentController {
     public StudentController(StudentViewer v, StudentModel m) throws SQLException {
         this.view=v;
         this.model=m;
-        this.model.connectToStudentData();
-
-        this.model.CreateStatement();
-        this.view.students=getStudents();
+        this.view.exitB.setOnAction(e-> Platform.exit());
+        this.view.students= getStudents();
         this.view.classes = getClasses();
-        //this.view.grades = getGrades();
 
-        this.model.QueryGetGrades();
+
+        this.model.connectToStudentData();
+        this.model.CreateStatement();
         this.model.QueryGetClasses();
         this.model.QueryGetStudentsID();
+
         view.configure();
     }
 
@@ -42,9 +43,16 @@ public class StudentController {
         return classesNames;
     }
 
-    public ObservableList<String> getGrades() throws SQLException {
-        ArrayList<String> grades= model.QueryGetClasses();
-        ObservableList<String> grade= FXCollections.observableArrayList(grades);
-        return grade;
+
+    public void gradeButtonHandler (TextArea clicked) throws SQLException {
+
+        try {
+            clicked.clear();
+            clicked.appendText(" Clicked button");
+
+        }catch (Exception e ){
+            System.out.println(e.getMessage());
+        }
     }
+
 }

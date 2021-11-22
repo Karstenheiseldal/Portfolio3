@@ -35,15 +35,10 @@ public class StudentModel {
 
         while (rs != null && rs.next()) {
             String studentID = rs.getString(1);
-            String firstname = rs.getString(2);
-            String lastname = rs.getString(3);
 
-            System.out.println("Student ID:" + studentID + "  Name: " + firstname + " " + lastname);
-
-            students.add(firstname);
+            students.add(studentID);
 
         }
-
         return students;
     }
 
@@ -64,28 +59,22 @@ public class StudentModel {
         return classes;
     }
 
-    public ArrayList<String> QueryGetGrades() throws SQLException {
-        ArrayList<String> gradeList = new ArrayList<>();
-        String sql = "SELECT * from Grades;";
+    /*public void showGrade(String studentID, String classID) throws SQLException {
+        String sql = "SELECT grade from Grades WHERE studentID = " + studentID + "AND classID = " + classID + ";";
         rs = stmt.executeQuery(sql);
-
+        ArrayList<String> grades = new ArrayList<>();
         while (rs != null && rs.next()) {
-            String grade = rs.getString(1);
-            String studentID = rs.getString(2);
-            String classID = rs.getString(3);
 
-            System.out.println("Student ID:" + studentID + "  Grade: " + grade + " " + "CLass ID: " + classID);
-            gradeList.add(grade);
+            String thevalue = rs.getString(1);
+
+            grades.add(thevalue);
+
         }
-        return gradeList;
-    }
+    }*/
 
-    public void findAverage() throws SQLException {
+        public void findAverage() throws SQLException {
         String sql = "SELECT AVG(Grade) from Grades;";
         rs = stmt.executeQuery(sql);
-        while (rs != null && rs.next()) {
-            String average = rs.getString(1);
-
+        String average = rs.getString(1);
         }
     }
-}
