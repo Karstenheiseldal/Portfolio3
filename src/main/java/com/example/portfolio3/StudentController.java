@@ -1,11 +1,10 @@
 package com.example.portfolio3;
 
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
+import org.w3c.dom.Text;
+
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,52 +14,37 @@ public class StudentController {
     StudentModel model;
 
     public StudentController(StudentViewer v, StudentModel m) throws SQLException {
-        this.view=v;
-        this.model=m;
+        this.view = v;
+        this.model = m;
         this.model.connectToStudentData();
+
         this.model.CreateStatement();
-
-
-        this.view.students= getStudents();
-        this.view.classes = getClasses();
-
-        this.view.findClasses.setOnAction(e-> {
-            try {
-                PrintClassesByStudentID(view.studentComB.getValue(), view.result);
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
-            }
-        });
-
-
-
-        this.model.QueryGetClasses();
         this.model.QueryGetStudentsID();
-        this.model.Queryforstudentclasses(view.studentComB.getValue());
+        this.view.students = getStudents();
 
         view.configure();
     }
 
     public ObservableList<String> getStudents() throws SQLException {
-        ArrayList<String> students= model.QueryGetStudentsID();
-        ObservableList<String> StudentNames= FXCollections.observableArrayList(students);
-        return StudentNames;
+        ArrayList<String> students = model.QueryGetStudentsID();
+        ObservableList<String> studentsNames= FXCollections.observableArrayList(students);
+        return studentsNames;
     }
 
-    public ObservableList<String> getClasses() throws SQLException {
-        ArrayList<String> classes= model.QueryGetClasses();
-        ObservableList<String> classesNames= FXCollections.observableArrayList(classes);
-        return classesNames;
-    }
+    public void HandlerPrintStudentClasses(Integer StudentID, Integer ClassID, TextArea txtfield){
+        txtfield.clear();
+        txtfield.appendText("Classes for student");
+        try {
+            ArrayList<StudentInfo> collectClass = model.QueryforStudents(StudentID, ClassID);
 
-    public void PrintClassesByStudentID (String StudentID, TextArea txtArea) throws SQLException{
-        txtArea.clear();
-        txtArea.appendText("Names of classes: \n");
-        ArrayList<StudentInfo> classList = model.Queryforstudentclasses(StudentID);
-        for (int i = 0; i < classList.size(); i++) {
-            System.out.println(classList.get(i).className);
+            for (int i = 0; i < collectClass.size(); i++) {
+                Integer classes = collectClass.get(i).className;
+                Integer student = collectClass.get(i).StudentId;
 
+                txtfield.appendText(i + ";" + collectClass.get(i).className + ": " + student);
+            }
+        }catch (SQLException e ){
+            System.out.println(e.getMessage());
         }
     }
-
 }

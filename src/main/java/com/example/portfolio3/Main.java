@@ -6,30 +6,23 @@ import javafx.stage.Stage;
 import java.sql.*;
 
 public class Main extends Application {
-    public void start(Stage primaryStage)  {
+    public void start(Stage primaryStage) {
 
-        String url="jdbc:sqlite:C:/Users/karst/SoftwareDevelopment/SD/DB/StudentDB.db";
-        StudentViewer view=new StudentViewer();
-        StudentModel model=new StudentModel(url);
-        StudentController control=null;
+        String url = "jdbc:sqlite:C:/Users/karst/Databases/StudentDB.db";
+        StudentViewer view = new StudentViewer();
+        StudentModel model = new StudentModel(url);
+        StudentController control = null;
 
         try {
             control = new StudentController(view, model);
-            primaryStage.setTitle("Student OS");
-            primaryStage.setScene(new Scene(view.asParent(),600,475));
-            primaryStage.show();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
-        }finally {
-            try {
-                model.closeStudentDataConnection();
-            }catch (SQLException e){
-                System.out.println(e.getMessage());
-            }
         }
 
-
+        primaryStage.setTitle("Student OS");
+        primaryStage.setScene(new Scene(view.asParent(), 600, 475));
+        primaryStage.show();
     }
 
     public static void main(String[] args){

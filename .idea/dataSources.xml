@@ -5,8 +5,7 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../SD/DB/StudentDB.db</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
+      <jdbc-url>jdbc:sqlite:$USER_HOME$/Databases/StudentDB.db</jdbc-url>
     </data-source>
   </component>
 </project>
