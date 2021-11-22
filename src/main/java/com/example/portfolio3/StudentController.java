@@ -1,11 +1,10 @@
 package com.example.portfolio3;
 
 
-import com.example.portfolio3.StudentModel;
-import com.example.portfolio3.StudentViewer;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.TextArea;
 
 import java.sql.SQLException;
@@ -18,15 +17,26 @@ public class StudentController {
     public StudentController(StudentViewer v, StudentModel m) throws SQLException {
         this.view=v;
         this.model=m;
-        this.view.exitB.setOnAction(e-> Platform.exit());
+        this.model.connectToStudentData();
+        this.model.CreateStatement();
+
+
         this.view.students= getStudents();
         this.view.classes = getClasses();
 
+        this.view.findClasses.setOnAction(e-> {
+            try {
+                PrintClassesByStudentID(view.studentComB.getValue(), view.result);
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            }
+        });
 
-        this.model.connectToStudentData();
-        this.model.CreateStatement();
+
+
         this.model.QueryGetClasses();
         this.model.QueryGetStudentsID();
+        this.model.Queryforstudentclasses(view.studentComB.getValue());
 
         view.configure();
     }
@@ -43,15 +53,13 @@ public class StudentController {
         return classesNames;
     }
 
+    public void PrintClassesByStudentID (String StudentID, TextArea txtArea) throws SQLException{
+        txtArea.clear();
+        txtArea.appendText("Names of classes: \n");
+        ArrayList<StudentInfo> classList = model.Queryforstudentclasses(StudentID);
+        for (int i = 0; i < classList.size(); i++) {
+            System.out.println(classList.get(i).className);
 
-    public void gradeButtonHandler (TextArea clicked) throws SQLException {
-
-        try {
-            clicked.clear();
-            clicked.appendText(" Clicked button");
-
-        }catch (Exception e ){
-            System.out.println(e.getMessage());
         }
     }
 

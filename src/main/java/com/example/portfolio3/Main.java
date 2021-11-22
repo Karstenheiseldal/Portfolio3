@@ -1,8 +1,4 @@
 package com.example.portfolio3;
-
-import com.example.portfolio3.StudentController;
-import com.example.portfolio3.StudentModel;
-import com.example.portfolio3.StudentViewer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
