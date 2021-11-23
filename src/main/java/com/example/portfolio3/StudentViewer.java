@@ -12,6 +12,7 @@ public class StudentViewer {
         Button findClasses;
         ComboBox<Integer> studentComB;
 
+
         TextArea result = new TextArea("Classes and Grades for");
         public ObservableList<Integer> students;
 

@@ -22,14 +22,14 @@ public class StudentController {
         this.model.QueryGetStudentsID();
         this.view.students = getStudents();
 
-        this.view.findClasses.setOnAction(e->HandlerPrintStudentClasses(view.studentComB.getValue(),1,view.result));
+        this.view.findClasses.setOnAction(e->HandlerPrintStudentClasses(view.studentComB.getValue(),3,view.result));
         view.configure();
     }
 
     public ObservableList<Integer> getStudents() throws SQLException {
         ArrayList<Integer> students = model.QueryGetStudentsID();
-        ObservableList<Integer> studentsNames= FXCollections.observableArrayList(students);
-        return studentsNames;
+        ObservableList<Integer> studentIds= FXCollections.observableArrayList(students);
+        return studentIds;
     }
 
     public void HandlerPrintStudentClasses(Integer StudentID, Integer ClassID, TextArea txtfield){
@@ -38,14 +38,13 @@ public class StudentController {
         try {
             ArrayList<StudentInfo> collectClass = model.QueryforStudents(StudentID, ClassID);
 
-            for (int i = 0; i < collectClass.size(); i++) {
-                Integer classes = collectClass.get(i).classId;
-                Integer student = collectClass.get(i).StudentId;
-                Integer grade = collectClass.get(i).grades;
 
-                txtfield.appendText("\n Student ID: " + student + " Attendended at class ID:" + classes);
-                txtfield.appendText(" \n Grade: " +grade);
-            }
+                String classes = collectClass.get(this.view.studentComB.getValue()).className;
+                String student = collectClass.get(this.view.studentComB.getValue()).name;
+                Integer grade = collectClass.get(this.view.studentComB.getValue()).grades;
+                Integer year = collectClass.get(this.view.studentComB.getValue()).classYear;
+
+                txtfield.appendText("Student: " + student + "\n Class: " + classes + " " + year +"\n  Grade: " + grade);
         }catch (SQLException e ){
             System.out.println(e.getMessage());
         }
