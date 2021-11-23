@@ -3,8 +3,6 @@ package com.example.portfolio3;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TextArea;
-import org.w3c.dom.Text;
-
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,9 +19,10 @@ public class StudentController {
         this.model.CreateStatement();
         this.model.QueryGetStudentsID();
         this.view.students = getStudents();
-
-        this.view.findClasses.setOnAction(e->HandlerPrintStudentClasses(view.studentComB.getValue(),3,view.result));
+        this.view.classes = getClasses();
+        this.view.findStudent.setOnAction(e->HandlerPrintStudent(view.studentComB.getValue(),view.classesComB.getValue(),view.result));
         view.configure();
+        this.view.findClass.setOnAction(e-> HandlerPrintClass(view.classesComB.getValue(), view.result));
     }
 
     public ObservableList<Integer> getStudents() throws SQLException {
@@ -32,19 +31,36 @@ public class StudentController {
         return studentIds;
     }
 
-    public void HandlerPrintStudentClasses(Integer StudentID, Integer ClassID, TextArea txtfield){
+    public ObservableList<Integer> getClasses() throws SQLException {
+        ArrayList<Integer> classes = model.QueryGetClassesID();
+        ObservableList<Integer> classID= FXCollections.observableArrayList(classes);
+        return classID;
+    }
+
+    public void HandlerPrintStudent(Integer StudentID, Integer ClassID, TextArea txtfield){
         txtfield.clear();
-        txtfield.appendText("Classes for student");
+
         try {
             ArrayList<StudentInfo> collectClass = model.QueryforStudents(StudentID, ClassID);
+            Integer average = model.findStudentAverage(StudentID);
 
+                String classes = collectClass.get(StudentID).className;
+                String student = collectClass.get(StudentID).name;
+                Integer grade = collectClass.get(StudentID).grades;
+                Integer year = collectClass.get(StudentID).classYear;
 
-                String classes = collectClass.get(this.view.studentComB.getValue()).className;
-                String student = collectClass.get(this.view.studentComB.getValue()).name;
-                Integer grade = collectClass.get(this.view.studentComB.getValue()).grades;
-                Integer year = collectClass.get(this.view.studentComB.getValue()).classYear;
+                txtfield.appendText("Student: " + student + "\nClass: " + classes + " " + year +"\nGrade: " + grade + "\nAverage " + average);
+        }catch (SQLException e ){
+            System.out.println(e.getMessage());
+        }
+    }
 
-                txtfield.appendText("Student: " + student + "\n Class: " + classes + " " + year +"\n  Grade: " + grade);
+    public void HandlerPrintClass(Integer ClassID, TextArea txtfield){
+        txtfield.clear();
+        try {
+            Integer average = model.findClassAverage(ClassID);
+
+                txtfield.appendText("Class average: " + average);
         }catch (SQLException e ){
             System.out.println(e.getMessage());
         }

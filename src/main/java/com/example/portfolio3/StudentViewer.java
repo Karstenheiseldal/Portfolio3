@@ -7,14 +7,18 @@ import javafx.scene.layout.GridPane;
 
 public class StudentViewer {
         GridPane startview;
-        Label studentLbl=new Label("Select student:");
+        Label studentLbl=new Label("Select student ID:");
+        Label classesLbl=new Label("Select course: ");
 
-        Button findClasses;
+        Button findStudent;
+        Button findClass;
         ComboBox<Integer> studentComB;
+        ComboBox<Integer> classesComB;
 
 
-        TextArea result = new TextArea("Classes and Grades for");
+        TextArea result = new TextArea("Please select student ID");
         public ObservableList<Integer> students;
+        public ObservableList<Integer> classes;
 
         public StudentViewer(){
             startview=new GridPane();
@@ -28,19 +32,28 @@ public class StudentViewer {
             startview.setVgap(5);
 
             startview.add(studentLbl,1,1);
-            startview.add(result,1,6, 15,7);
-
-            findClasses = new Button("Classes");
-            startview.add(findClasses,2,50);
-
             studentComB=new ComboBox<>();
             startview.add(studentComB,2,1);
 
+
+            findStudent = new Button("Student Info");
+            startview.add(findStudent,3,1);
+
+
+            startview.add(classesLbl,1,2);
+            classesComB=new ComboBox<>();
+            startview.add(classesComB,2,2);
+            findClass = new Button("Course average");
+            startview.add(findClass,3,2);
+
+            startview.add(result,1,6, 15,7);
         }
 
         public void configure(){
             studentComB.setItems(students);
             studentComB.getSelectionModel().selectFirst();
+            classesComB.setItems(classes);
+            classesComB.getSelectionModel().selectFirst();
         }
 
         public Parent asParent(){

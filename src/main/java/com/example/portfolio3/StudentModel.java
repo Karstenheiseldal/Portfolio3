@@ -41,6 +41,18 @@ public class StudentModel {
         }
         return students;
     }
+
+    public ArrayList<Integer> QueryGetClassesID() throws SQLException {
+        ArrayList<Integer> classes = new ArrayList<>();
+        String sql = "SELECT * from Classes;";
+        rs = stmt.executeQuery(sql);
+
+        while (rs != null && rs.next()) {
+            Integer id = rs.getInt(1);
+            classes.add(id);
+        }
+        return classes;
+    }
     public ArrayList<StudentInfo> QueryforStudents(Integer StudentID, Integer ClassID) throws SQLException{
 
         ArrayList<StudentInfo> studentinf=new ArrayList<>();
@@ -59,11 +71,33 @@ public class StudentModel {
             Integer cly = rs.getInt(5);
             String name = rs.getString(9) + " " + rs.getString(10);
             String clName = rs.getString(7);
-            System.out.println(st+ " got grade "+gr+ " at class"+ cl);
+            //System.out.println(st+ " got grade "+gr+ " at class"+ cl);
             StudentInfo s=new StudentInfo(st,cl,gr,name,clName,cly);
             studentinf.add(s);
         }
         return studentinf;
+    }
+
+    public Integer findStudentAverage(Integer StudentID) throws SQLException {
+        String sql = "SELECT AVG(Grade) from Grades WHERE StudentID = ?;";
+
+        pstmt=conn.prepareStatement(sql);
+        pstmt.setInt(1,StudentID);
+        rs=pstmt.executeQuery();
+
+        Integer average = rs.getInt(1);
+        return average;
+    }
+
+    public Integer findClassAverage(Integer ClassID) throws SQLException {
+        String sql = "SELECT AVG(Grade) from Grades WHERE StudentID = ?;";
+
+        pstmt=conn.prepareStatement(sql);
+        pstmt.setInt(1,ClassID);
+        rs=pstmt.executeQuery();
+
+        Integer average = rs.getInt(1);
+        return average;
     }
 }
 
@@ -72,7 +106,7 @@ class StudentInfo{
     Integer classId=null;
     Integer grades=null;
     Integer classYear=null;
-
+    Integer average = null;
     String name = null;
     String className = null;
 
