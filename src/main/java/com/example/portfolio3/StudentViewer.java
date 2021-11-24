@@ -6,47 +6,39 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 public class StudentViewer {
-        GridPane startview; //a new gridPane is made
+        GridPane startView; //a new gridPane is made
         Label studentLbl=new Label("Select student ID:"); //Creates text on a new label for students
         Label classesLbl=new Label("Select course: "); //Creates label for classes
-
         Button findStudent; //A button with the name findStudent
         Button findClass; //Same for class
-        ComboBox<Integer> studentComB; //Creates the menulist with students
-        ComboBox<Integer> classesComB; //Same for classes choice
-
-
+        ComboBox<Integer> studentComB; //There is going to be a comboBox with students
+        ComboBox<Integer> classesComB; //Same for classes
         TextArea result = new TextArea("Please select student ID"); //Creates the result area with the specified text
+
         public ObservableList<Integer> students; //Student and Class observable list to the javaFX
         public ObservableList<Integer> classes; //
 
         public StudentViewer(){ //Studentiewer constructor. A ew gridpane and then uses the createView, which is the method below.
-            startview=new GridPane();
+            startView =new GridPane();
             CreateView();
         }
 
         private void CreateView(){ //This imbodies the view, where the v's are defining the window size.
-            startview.setMinSize(300,200);
-            startview.setPadding( new Insets(10,10,10,10)); //Padding and gaps
-            startview.setHgap(1); //
-            startview.setVgap(5);
-
-            startview.add(studentLbl,1,1); //Adds the studentlabel
+            startView.setMinSize(300,200);
+            startView.setPadding( new Insets(10,10,10,10)); //Padding and gaps
+            startView.setHgap(1); //
+            startView.setVgap(5);
+            startView.add(studentLbl,1,1); //Adds the studentlabel
             studentComB=new ComboBox<>();
-            startview.add(studentComB,2,1); //Adding the Combobox for student
-
-
+            startView.add(studentComB,2,1); //Adding the Combobox for student
             findStudent = new Button("Student Info");
-            startview.add(findStudent,3,1);  //Button as mentioned, Gets a position in the view
-
-
-            startview.add(classesLbl,1,2); //Adds the classes text on the UI with classeslabel
+            startView.add(findStudent,3,1);  //Button as mentioned, Gets a position in the view
+            startView.add(classesLbl,1,2); //Adds the classes text on the UI with classeslabel
             classesComB=new ComboBox<>();
-            startview.add(classesComB,2,2); //Same with ComboBox
+            startView.add(classesComB,2,2); //Same with ComboBox
             findClass = new Button("Course average");
-            startview.add(findClass,3,2); //Placement of the new button
-
-            startview.add(result,1,6, 15,7); //Adding the textarea last
+            startView.add(findClass,3,2); //Placement of the new button
+            startView.add(result,1,6, 15,7); //Adding the textarea last
         }
 
         public void configure(){
@@ -57,6 +49,6 @@ public class StudentViewer {
         }
 
         public Parent asParent(){
-            return  startview;
+            return startView;
         } //Startview is Parent
 }

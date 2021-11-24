@@ -14,7 +14,6 @@ public class StudentController {  //The studentcontroller, operator for the view
         this.view = v;
         this.model = m;
         this.model.connectToStudentData(); //Connect model to database
-
         this.model.CreateStatement(); //model creates a statement to the database
         this.model.QueryGetStudentsID(); //model gets the studentid from the database with prepared statements.
         this.view.students = getStudents();  //The views arrayList students is the same as the arraylist returned in the getStudents method.
@@ -33,37 +32,33 @@ public class StudentController {  //The studentcontroller, operator for the view
     public ObservableList<Integer> getClasses() throws SQLException { //same method with the classes observationlist. Using the models ability to retrieve data and collect the findings in the arrayList..
         ArrayList<Integer> classes = model.QueryGetClassesName(); //Uses the data extracting method from the database through a prep statement.
         ObservableList<Integer> classID= FXCollections.observableArrayList(classes); //This is been converted to an Observable list for the view.
-        return classID; //Returns the Observabklelist.
+        return classID; //Returns the ObservableList.
     }
 
     public void HandlerPrintStudent(Integer StudentID, Integer ClassID, TextArea txtfield) { //The handler print student print out the student information. With the use of the object from studentInfo class
         txtfield.clear(); //The textfield is always starting clear
 
         try {
-            ArrayList<StudentInfo> collectClass = model.QueryStudents(StudentID, ClassID); //Adds an generic arraylist with the type of Studeninfo, which is a blueprint of what is related to the students for future purposes.
-
+            ArrayList<StudentInfo> collectStudents = model.QueryStudents(StudentID, ClassID); //Adds an generic arraylist with the type of Studeninfo, which is a blueprint of what is related to the students for future purposes.
             Integer average = model.findStudentAverage(StudentID); //Makes the finding average method with the model.
 
-
-                String className = collectClass.get(StudentID).className;
-                String student = collectClass.get(StudentID).name;      //Gets the student String from the lists student gives the of the name of the list
-                Integer grade = collectClass.get(StudentID).grades; //same with grade
-                Integer year = collectClass.get(StudentID).classYear; //Same with year
-
-                txtfield.appendText("Student: " + student + "\nCourse: " + className + " " + year + "\nGrade: " + grade + "\nAverage " + average); //The textfields text
+            String className = collectStudents.get(StudentID).className;
+            String student = collectStudents.get(StudentID).name;      //Gets the student String from the lists student gives the of the name of the list
+            Integer grade = collectStudents.get(StudentID).grades; //same with grade
+            Integer year = collectStudents.get(StudentID).classYear; //Same with year
+            txtfield.appendText("Student: " + student + "\nCourse: " + className + " " + year + "\nGrade: " + grade + "\nAverage " + average); //The textfields text
         }
             catch(SQLException e ){
                 System.out.println(e.getMessage());
             }
         }
 
-    public void HandlerPrintClass(Integer ClassID, TextArea txtfield){ //Handles to print an average from the ClassID
+    public void HandlerPrintClass(Integer ClassID, TextArea txtfield){ //Handler to print an average from the ClassID
         txtfield.clear();
         try {
             ArrayList<Integer> collectClass =model.QueryGetClassesName();
             Integer average = model.findClassAverage(ClassID);
-
-                txtfield.appendText(this.view.classesComB.getValue() + "Class average: " + average );
+            txtfield.appendText("Class average: " + average );
         }catch (SQLException e ){
             System.out.println(e.getMessage());
         }
